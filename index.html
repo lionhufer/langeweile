@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0d10" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Kairo" />
+  <title>Kairo Portfolio</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <img src="icons/icon.svg" alt="" width="28" height="28" />
+        <span>Kairo</span>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn" id="btnHide" aria-label="Beträge ausblenden" title="Beträge ausblenden">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+        <button class="icon-btn" id="btnRefresh" aria-label="Aktualisieren" title="Aktualisieren">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+        </button>
+        <button class="icon-btn" id="btnSettings" aria-label="Einstellungen" title="Einstellungen">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-label">Portfolio-Wert</div>
+        <div class="hero-total money" id="total">–</div>
+        <div class="hero-sub" id="heroSub"></div>
+      </section>
+
+      <section class="card chart-card" id="chartCard">
+        <div class="chart-head" id="chartHead">&nbsp;</div>
+        <div class="chart" id="portfolioChart"></div>
+        <div class="ranges" id="ranges">
+          <button data-r="1">24H</button>
+          <button data-r="7" class="active">7T</button>
+          <button data-r="30">1M</button>
+          <button data-r="90">3M</button>
+          <button data-r="365">1J</button>
+        </div>
+      </section>
+
+      <section class="stats" id="stats">
+        <div class="stat">
+          <div class="stat-label">Investiert</div>
+          <div class="stat-value money" id="statInvested">–</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Gewinn / Verlust</div>
+          <div class="stat-value money" id="statPnl">–</div>
+          <div class="stat-sub" id="statPnlPct"></div>
+        </div>
+      </section>
+
+      <section class="card" id="allocCard">
+        <div class="section-title">Verteilung</div>
+        <div class="alloc-bar" id="allocBar"></div>
+        <ul class="alloc-legend" id="allocLegend"></ul>
+      </section>
+
+      <section class="assets">
+        <div class="section-head">
+          <h2>Assets</h2>
+          <button class="text-btn" id="btnAdd">+ Hinzufügen</button>
+        </div>
+        <ul class="asset-list" id="assetList"></ul>
+        <div class="empty" id="empty" hidden>
+          <div class="empty-icon">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
+          </div>
+          <h3>Noch keine Assets</h3>
+          <p>Trag ein, welche Coins du hältst. Kairo berechnet den aktuellen Wert, deine Performance und die Verteilung.</p>
+          <button class="primary-btn" id="btnAddEmpty">Erstes Asset hinzufügen</button>
+        </div>
+      </section>
+
+      <footer class="foot" id="foot">Kurse von CoinGecko</footer>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="backdrop" id="backdrop" hidden>
+    <div class="sheet" id="sheet" role="dialog" aria-modal="true"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
